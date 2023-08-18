@@ -8,24 +8,9 @@ test.use({
 test('pixi test', async ({ page }) => {
   await page.goto('http://localhost:3000/');
 
-
-  await page.waitForTimeout(1000);
-
   await expect(page).toHaveTitle("Pixi Testing");
 
-  const canvas = page.getByTestId('canvas');
-
-  canvas.waitFor();
-
-  page.mouse.move(50, 50);
-
-  page.mouse.click(50, 50);
-
-  page.mouse.down();
-
-  page.mouse.move(100, 100);
-
-  page.mouse.up();
+  page.mouse.click(250, 250);
 
   await expect(page).toHaveScreenshot("pixi.png");
 });

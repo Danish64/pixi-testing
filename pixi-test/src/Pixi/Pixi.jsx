@@ -1,57 +1,36 @@
-import { BlurFilter } from 'pixi.js';
-import { Stage, Container, Sprite, Text } from '@pixi/react';
-import { useMemo, useRef, useState, useCallback } from 'react';
+import {Stage, Sprite} from "@pixi/react";
+import {useState, useMemo} from "react";
+import { BlurFilter } from "pixi.js";
+import '@pixi/accessibility';
 
-const useDrag = ({ x, y }) => {
-  const sprite =  useRef();
-  const [isDragging, setIsDragging] =  useState(false);
-  const [position, setPosition] =  useState({ x, y });
-  
-  const onDown =  useCallback(() => setIsDragging(true), []);
-  const onUp =  useCallback(() => setIsDragging(false), []);
-  const onMove =  useCallback(e => {
-    if (isDragging && sprite.current) {
-      setPosition(e.data.getLocalPosition(sprite.current.parent));
-    }
-  }, [isDragging, setPosition]);
-  
-  return {
-    ref: sprite,
-    interactive: true, 
-    pointerdown: onDown, 
-    pointerup: onUp, 
-    pointerupoutside: onUp,
-    pointermove: onMove,
-    alpha: isDragging ? 0.5 : 1,
-    anchor: 0.5,
-    position,
-  };
-};
-
-const DraggableBunny = ({ x = 400, y = 300, ...props }) => {
-  const bind = useDrag({ x, y });
-  
-  return (
-    <Sprite
-      image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/IaUrttj.png" 
-      scale={4}
-      {...bind}
-      {...props}
-    />
-  );
-}
+const bunny = "https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/IaUrttj.png";
+export const isE2E = () => navigator.webdriver;
 
 export const Pixi = () => {
-  
-  
+
+  // without this line, all mouse events are broken
+  useMemo(() => new BlurFilter(0), []);
+
+  const [spriteScale, setSpriteScale] = useState({ x: 2, y: 2 });
+
   return (
-    <Stage width={1920} height={1080} options={{ backgroundColor: 0xeef1f5 }} id='canvas' data-testid="canvas">
-        <Container>
-            <DraggableBunny x={100} y={100} scale={2} data-testid="bunny1"/>
-            <DraggableBunny x={300} y={100} scale={3} />
-            <DraggableBunny x={500} y={100} scale={4} />
-            <DraggableBunny x={700} y={100} scale={5} />
-      </Container>
-    </Stage>
-  )
-};
+  <Stage width={1920} height={1080} options={{ backgroundColor: 0x012b30 }}>
+    <Sprite
+      x={250}
+      y={250}
+      anchor={[0.5, 0.5]}
+      interactive={true}
+      accessible={true}
+      accessibleTitle="I am bunny, hehe"
+      scale={spriteScale}
+      image={bunny}
+      pointerdown={() => {
+        setSpriteScale((spriteScale) => ({x: spriteScale.x * 1.25, y: spriteScale.y * 1.25}))
+      }}
+      ontap={() => {
+        setSpriteScale((spriteScale) => ({x: spriteScale.x * 1.25, y: spriteScale.y * 1.25}))
+      }}
+    />
+  </Stage>
+)};
+

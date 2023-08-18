@@ -3,9 +3,7 @@ import { Pixi } from './Pixi/Pixi';
 
 function App() {
   return (
-    <>
      <Pixi />
-    </>
   );
 }
 

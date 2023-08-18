@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@pixi/accessibility@^7.2.4":
+  version "7.2.4"
+  resolved "https://registry.yarnpkg.com/@pixi/accessibility/-/accessibility-7.2.4.tgz#3198d0059c230c668b1179457346a3b5dcba6e64"
+  integrity sha512-EVjuqUqv9FeYFXCv0S0qj1hgCtbAMNBPCbOGEtiMogpM++/IySxBZvcOYg3rRgo9inwt2s4Bi7kUiqMPD8hItw==
+
 "@playwright/test@^1.37.0":
   version "1.37.0"
   resolved "https://registry.yarnpkg.com/@playwright/test/-/test-1.37.0.tgz#5b3b60dabaabc0d5d3021fb5a5bb8250b424c71d"
