@@ -4,8 +4,6 @@ import { BlurFilter } from "pixi.js";
 import '@pixi/accessibility';
 
 const bunny = "https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/IaUrttj.png";
-export const isE2E = () => navigator.webdriver;
-
 export const Pixi = () => {
 
   // without this line, all mouse events are broken
@@ -25,7 +23,7 @@ export const Pixi = () => {
       scale={spriteScale}
       image={bunny}
       pointerdown={() => {
-        setSpriteScale((spriteScale) => ({x: spriteScale.x * 1.25, y: spriteScale.y * 1.25}))
+        setSpriteScale((spriteScale) => ({x: spriteScale.x * 5, y: spriteScale.y * 5}))
       }}
       ontap={() => {
         setSpriteScale((spriteScale) => ({x: spriteScale.x * 1.25, y: spriteScale.y * 1.25}))
