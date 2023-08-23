@@ -1,5 +1,5 @@
-import {Stage, Sprite} from "@pixi/react";
-import {useState, useMemo} from "react";
+import {Stage, Sprite, Graphics} from "@pixi/react";
+import {useState, useMemo, useRef, useEffect, useCallback} from "react";
 import { BlurFilter } from "pixi.js";
 import '@pixi/accessibility';
 
@@ -7,32 +7,42 @@ const bunny = "https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/IaUrttj.png";
 
 const isE2E = navigator.webdriver;
 
+function Rectangle({onClick, rectangle}) {
+  const draw = useCallback(
+    (g) => {
+      g.clear();
+      g.debug = true;
+      g.accessible = true;
+      g.interactive = true;
+      // g._accessibleDiv.dataset["data-testid"] = "test_rect"; 
+      g.accessibleTitle = isE2E ?  "PIXI__TEST__RECTANGLE" : "I am rectangle"
+      g.pointerdown = onClick
+      g.ontap = onClick
+      g.lineStyle(0);
+      g.beginFill(0xffff0b, 0.5);
+      g.drawRect(rectangle.leftTop, rectangle.rightTop, rectangle.bottomLeft, rectangle.bottomRight);
+      g.endFill();
+    },
+    [rectangle, onClick],
+  );
+
+  return <Graphics draw={draw} />;
+}
+
 export const Pixi = () => {
 
   // without this line, all mouse events are broken
   useMemo(() => new BlurFilter(0), []);
 
-  const [spriteScale, setSpriteScale] = useState({ x: 2, y: 2 });
+  const [spriteScale, setSpriteScale] = useState({ leftTop: 50, rightTop: 250, bottomLeft: 120, bottomRight: 120});
 
   const onClick = () => {
-    setSpriteScale((spriteScale) => ({x: spriteScale.x * 5, y: spriteScale.y * 5}))
+    setSpriteScale((spriteScale) => ({leftTop: spriteScale.leftTop + 10, rightTop: spriteScale.rightTop + 10, bottomLeft: spriteScale.bottomLeft + 10, bottomRight: spriteScale.bottomRight + 10}));
   }
 
   return (
   <Stage width={1920} height={1080} options={{ backgroundColor: 0x012b30 }} data-testid="canvas">
-    <Sprite
-      x={250}
-      y={250}
-      anchor={[0.5, 0.5]}
-      interactive
-      accessible={isE2E}
-      accessibleTitle="I am bunny"
-      debug={isE2E}
-      scale={spriteScale}
-      image={bunny}
-      pointerdown={onClick}
-      ontap={onClick}
-    />
+    <Rectangle onClick={onClick} rectangle={spriteScale}/>
   </Stage>
 )};
 

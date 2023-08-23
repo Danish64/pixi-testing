@@ -20,11 +20,11 @@ test('pixi test', async ({ page }) => {
 
   page.keyboard.press("Tab");
 
-  const bunny = page.getByTitle("I am bunny");
+  const graphic = page.getByTitle("PIXI__TEST__RECTANGLE");
 
-  await expect(bunny).toBeVisible();
+  await expect(graphic).toBeVisible();
 
-  await bunny.click();
+  await graphic.click();
 
   await expect(page).toHaveScreenshot("pixi.png");
 });
