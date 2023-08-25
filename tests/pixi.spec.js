@@ -24,7 +24,32 @@ test('pixi test', async ({ page }) => {
 
   await expect(graphic).toBeVisible();
 
-  await graphic.click();
+  const graphicCords = await graphic.boundingBox();
+
+  expect(graphicCords?.x).toBe(0);
+  expect(graphicCords?.y).toBe(0);
+
+  page.keyboard.press("Tab");
+
+  page.keyboard.press("Enter");
+
+  page.keyboard.press("ArrowRight");
+  page.keyboard.press("ArrowRight");
+  page.keyboard.press("ArrowRight");
+  page.keyboard.press("ArrowRight");
+
+  page.keyboard.press("ArrowDown");
+  page.keyboard.press("ArrowDown");
+  page.keyboard.press("ArrowDown");
+  page.keyboard.press("ArrowDown");
+
+  page.keyboard.press("ArrowLeft");
+  page.keyboard.press("ArrowUp");  
+
+  const graphicCords1 = await graphic.boundingBox();
+
+  expect(graphicCords1?.x).toBe(30);
+  expect(graphicCords1?.y).toBe(30);
 
   await expect(page).toHaveScreenshot("pixi.png");
 });

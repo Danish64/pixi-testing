@@ -21,7 +21,7 @@ const DraggableBox = () => {
         g.accessibleTitle = isE2E ?  "PIXI__TEST__RECTANGLE" : "I am rectangle"
         g.lineStyle(0);
         g.beginFill(0xffff0b, 0.5);
-        g.drawRect(50, 250, 120, 120);
+        g.drawRect(0, 0, 120, 120);
         g.endFill();
     },
     [],
@@ -38,7 +38,7 @@ export const Pixi = () => {
   useMemo(() => new BlurFilter(0), []);
 
   return (
-    <Stage width={width} height={height} options={{ backgroundColor }}>
+    <Stage width={width} height={height} options={{ backgroundColor }} data-testid="canvas">
     <Container sortableChildren={true}>
       <DraggableBox tint={0xff00ff} x={0} />
     </Container>
