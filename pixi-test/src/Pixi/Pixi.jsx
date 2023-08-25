@@ -9,7 +9,7 @@ const width = 1920;
 const height = 1080;
 const backgroundColor = 0x1d2330;
 
-const DraggableBox = () => {
+const DraggableBox = ({tint, x, y, testId}) => {
   const p = usePixiDragAndDrop();
 
   const draw = useCallback(
@@ -18,10 +18,10 @@ const DraggableBox = () => {
         g.debug = true;
         g.accessible = true;
         g.interactive = true;
-        g.accessibleTitle = isE2E ?  "PIXI__TEST__RECTANGLE" : "I am rectangle"
+        g.accessibleTitle = isE2E ?   testId : "I am rectangle";
         g.lineStyle(0);
-        g.beginFill(0xffff0b, 0.5);
-        g.drawRect(0, 0, 120, 120);
+        g.beginFill(tint, 0.5);
+        g.drawRect(x, y, 40, 40);
         g.endFill();
     },
     [],
@@ -40,7 +40,9 @@ export const Pixi = () => {
   return (
     <Stage width={width} height={height} options={{ backgroundColor }} data-testid="canvas">
     <Container sortableChildren={true}>
-      <DraggableBox tint={0xff00ff} x={0} />
+      <DraggableBox tint={0xff00ff} x={0} y={0} testId={"PIXI__TEST__RECTANGLE_1"}/>
+      <DraggableBox tint={0xffff00} x={80} y={80} testId={"PIXI__TEST__RECTANGLE_2"}/>
+      <DraggableBox tint={0xff0000} x={160} y={160} testId={"PIXI__TEST__RECTANGLE_3"}/>
     </Container>
   </Stage>
 )};

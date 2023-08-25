@@ -3,34 +3,26 @@ const { test, expect } = require('@playwright/test');
 
 test.use({
   viewport: { width: 1920, height: 1080 },
-  
-
 });
 
-test('pixi test', async ({ page }) => {
-  await page.goto('http://localhost:3000/');
+const graphicCords1 = {x: 0, y: 0};
+const graphicCords2 = {x: 80, y: 80};
+const graphicCords3 = {x: 160, y: 160};
 
-  await page.waitForTimeout(2000);
+const selectMoveAndTestElement = async (page, testId, testCords) => {
 
-  await expect(page).toHaveTitle("Pixi Testing");
-
-  const canvas = page.locator("data-testid=canvas");
-
-  await expect(canvas).toBeVisible();
-
-  page.keyboard.press("Tab");
-
-  const graphic = page.getByTitle("PIXI__TEST__RECTANGLE");
+  const graphic = page.getByTitle(testId);
 
   await expect(graphic).toBeVisible();
 
-  const graphicCords = await graphic.boundingBox();
+  let graphicCords = await graphic.boundingBox();
 
-  expect(graphicCords?.x).toBe(0);
-  expect(graphicCords?.y).toBe(0);
+  expect(graphicCords?.x).toBe(testCords.x);
+  expect(graphicCords?.y).toBe(testCords.y);
 
   page.keyboard.press("Tab");
 
+  // Select the element
   page.keyboard.press("Enter");
 
   page.keyboard.press("ArrowRight");
@@ -46,11 +38,36 @@ test('pixi test', async ({ page }) => {
   page.keyboard.press("ArrowLeft");
   page.keyboard.press("ArrowUp");  
 
-  const graphicCords1 = await graphic.boundingBox();
+  graphicCords = await graphic.boundingBox();
 
-  expect(graphicCords1?.x).toBe(30);
-  expect(graphicCords1?.y).toBe(30);
+  expect(graphicCords?.x).toBe(testCords.x + 30);
+  expect(graphicCords?.y).toBe(testCords.y + 30);
 
-  await expect(page).toHaveScreenshot("pixi.png");
+  // Unselect the element
+  page.keyboard.press("Enter");
+}
+
+
+
+test('pixi test', async ({ page }) => {
+  await page.goto('http://localhost:3000/');
+
+  await page.waitForTimeout(2000);
+
+  await expect(page).toHaveTitle("Pixi Testing");
+
+  const canvas = page.locator("data-testid=canvas");
+
+  await expect(canvas).toBeVisible();
+
+  page.keyboard.press("Tab");
+
+  await selectMoveAndTestElement(page, "PIXI__TEST__RECTANGLE_1", graphicCords1);
+
+  await selectMoveAndTestElement(page, "PIXI__TEST__RECTANGLE_2", graphicCords2);
+
+  await selectMoveAndTestElement(page, "PIXI__TEST__RECTANGLE_3", graphicCords3);
+  
+  // await expect(page).toHaveScreenshot("pixi.png");
 });
 

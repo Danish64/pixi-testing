@@ -102,6 +102,7 @@ export const usePixiDragAndDrop = (
         dragged.current = undefined;
         } else {
         // pick up the item
+        console.log("Test",  e.target);
         dragged.current = { item: e.target };
         }
   }, [dragged]);
@@ -130,7 +131,7 @@ export const usePixiDragAndDrop = (
     }
     dragged.current.item.y += 10;
   };
-  
+
   useEffect(() => {
     if (!app.stage) {
       return;
