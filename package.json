@@ -8,6 +8,9 @@
   },
   "scripts": {},
   "dependencies": {
-    "@pixi/accessibility": "^7.2.4"
+    "@pixi/accessibility": "^7.2.4",
+    "intersects": "^2.7.2",
+    "lodash-es": "^4.17.21",
+    "rooks": "^7.14.1"
   }
 }
